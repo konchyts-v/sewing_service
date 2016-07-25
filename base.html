@@ -1,0 +1,104 @@
+{% load staticfiles %}
+<!Doctype html>
+<html lang="ua">
+    
+<head> 
+    <meta charset="utf-8">
+ 	<title>{% block title %}Відгуки {% endblock %}</title>                 
+ 	<link rel="stylesheet" type="text/css" href="{% static 'reviews/style.css' %}">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+ 	<script src="{% static 'reviews/script.js' %}"></script>
+	<script src="https://use.fontawesome.com/1e56151729.js"></script>
+</head>
+    
+<body>
+	<div class="header">
+		<a href="{% url 'aboutus:aboutus' %}">Головна</a>
+    	<a href="{% url 'aboutus:aboutus' %}">Про нас</a>
+    	<a href="{% url 'gallery:gallery_views' %}">Фотогалерея</a>
+    	<a href="{% url 'reviews:reviews' %}" class="active">Відгуки</a>
+    	<a href="{% url 'order:send_order' %}">Замовити</a>
+    </div>
+    
+	{% if message %}
+		<div class="thanks">{{ message }}</div>
+	{% endif %}
+	
+	<div class="content info">
+		{{review_info}}
+	</div>
+	
+<ul> 
+	{% if errors %}
+    <div class="errors">
+		{% for error in errors %} 
+			<li>{{ error }}</li> 
+		{% endfor %}
+	</div>
+	{% endif %}
+</ul> 
+	
+{% for reviews in all_reviews %} 
+<div class="review_block">
+       <div class="review_text">
+		   <i>{{ reviews.message }}</i>
+         </div>
+          <div class="sender">
+          {{ reviews.sender_name }}
+         </div>
+       <div class="review_date">
+        <i class="fa fa-calendar" aria-hidden="true"></i> {{ reviews.pub_date }}
+         </div>
+    </div>
+{% endfor %}
+<div class="add_review">
+    Додати відгук
+    </div>
+<div class="popup_review">
+    <i class="fa fa-times" aria-hidden="true"></i>
+    <div class="popup_review_block">
+           Форма відгуку
+	      <form action="{% url 'reviews:reviews' %}" method="post">
+		     {% csrf_token %}
+		     <div class="field">
+   		      	<label>Ім'я:</label> {{ form.sender_name }}
+             </div>
+   	       	<div class="field">
+   		 	<label>Повідомлення:</label> {{ form.message }}
+          </div>
+          <input type="submit" value="Надіслати" id="msgSend">
+        
+        </form>
+       </div>
+    </div>
+<div class="question-button">
+    У Вас є питання?
+    </div>
+<div class="popup">
+    <i class="fa fa-times" aria-hidden="true"></i>
+    <div class="popup_block">
+        <form action="{% url 'thanks:thanks_for_question' %}" method="post">
+			{% csrf_token %}
+        <div class="field">
+  <label>Тема:</label> {{ question_form.title }}
+        </div>
+    <br>
+        <div class="field">
+    <label>Запитання:</label> {{ question_form.body }}
+        </div>
+    <br>
+        <div class="field">
+    <label>Відправник:</label> {{ question_form.sender }}
+        </div>
+    <br>
+    <input type="submit" value="Надіслати">
+        </form>
+    </div>
+        
+    </div>
+    
+<div class="wrapper">
+    </div>
+</body>
+    
+</html>

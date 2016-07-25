@@ -1,0 +1,59 @@
+{% load staticfiles %}
+<!Doctype html>
+<html lang="ua">
+    
+<head> 
+    <meta charset="utf-8">
+ <title>Сторінки не знайдено!</title>                 
+ <link rel="stylesheet" href="{% static 'thanks/style.css' %}">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    
+<script src="https://use.fontawesome.com/1e56151729.js"></script>
+
+ <script src="{% static 'thanks/script.js' %}"></script>
+
+</head>
+    
+<body>
+
+<div class="header">
+    <a href="/aboutus/">Про нас</a>
+    <a href="/gallery/">Фотогалерея</a>
+    <a href="/reviews/">Відгуки</a>
+    <a href="/order/">Замовити</a>
+    </div>
+    
+<div class="content">
+    {{message}}
+</div>
+    
+<div class="question-button">
+    У Вас є питання?
+    </div>
+<div class="popup">
+    <i class="fa fa-times" aria-hidden="true"></i>
+    <div class="popup_block">
+        <form action="/thanks/question/" method="post">
+			{% csrf_token %}
+        <div class="field">
+  <label>Тема:</label> {{ question_form.title }}
+        </div>
+    <br>
+        <div class="field">
+    <label>Запитання:</label> {{ question_form.body }}
+        </div>
+    <br>
+        <div class="field">
+    <label>Відправник:</label> {{ question_form.sender }}
+        </div>
+    <br>
+    <input type="submit" value="Надіслати">
+        </form>
+    </div>
+        
+    </div>
+<div class="wrapper">
+    </div>
+</body>
+    
+</html>

@@ -1,0 +1,87 @@
+{% load staticfiles %}
+<!Doctype html>
+<html lang="ua">
+    
+<head> 
+    <meta charset="utf-8">
+ <title>Замовити</title>                 
+ <link rel="stylesheet" type="text/css" href="{% static 'order/style.css' %}">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+	
+	<script src="https://use.fontawesome.com/1e56151729.js"></script>
+	<script src="{% static 'order/script.js' %}"></script>
+
+</head>
+    
+<body>
+
+<div class="header">
+	<a href="{% url 'main:Main_Func' %}">Головна</a>
+    <a href="{% url 'aboutus:aboutus' %}">Про нас</a>
+    <a href="{% url 'gallery:gallery_views' %}">Фотогалерея</a>
+    <a href="{% url 'reviews:reviews' %}">Відгуки</a>
+    <a href="{% url 'order:send_order' %}" class="active">Замовити</a>
+    </div>
+	
+	{% if review_info %}
+		<div class="content info">
+			{{review_info}}
+		</div>
+	{% endif %}
+	
+	<div class="content">
+		<div class="msgerrors">
+			<ul> 
+				{% for error in errors %} 
+					<li>{{ error }}</li> 
+				{% endfor %} 
+			</ul> 
+		</div>
+    <div class="form-block">
+    <form action="{% url 'order:send_order' %}" method="post">
+		{% csrf_token %}
+        <div class="field">
+   <label>Тема:</label> {{ form.subject }}
+        </div>
+   <div class="field">
+   <label>Повідомлення:</label> {{ form.message }}
+        </div>
+    <div class="field">
+   <label>Відправник:</label> {{ form.sender }}
+        </div>
+    <input type="submit" value="Надіслати" id="msgSend">
+    </form>
+    </div>
+    </div>
+    
+<div class="question-button">
+    У Вас є питання?
+    </div>
+<div class="popup">
+    <i class="fa fa-times" aria-hidden="true"></i>
+    <div class="popup_block">
+        <form action="{% url 'thanks:thanks_for_question' %}" method="post">
+			{% csrf_token %}
+        <div class="field">
+  <label>Тема:</label> {{ question_form.title }}
+        </div>
+    <br>
+        <div class="field">
+    <label>Запитання:</label> {{ question_form.body }}
+        </div>
+    <br>
+        <div class="field">
+    <label>Відправник:</label> {{ question_form.sender }}
+        </div>
+    <br>
+    <input type="submit" value="Надіслати">
+        </form>
+    </div>
+        
+    </div>
+    
+<div class="wrapper">
+    </div>
+</body>
+    
+</html>

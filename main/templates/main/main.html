@@ -1,0 +1,70 @@
+{% load staticfiles %}
+<!Doctype html>
+<html lang="ua">
+    
+<head> 
+    <meta charset="utf-8">
+ <title>Швейні послуги</title>                 
+ <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    
+<script src="https://use.fontawesome.com/1e56151729.js"></script>
+
+ <script src="{% static 'main/script.js' %}"></script>
+
+</head>
+    
+<body>
+
+<div class="header">
+	<a href="{% url 'main:Main_Func' %}" class="active">Головна</a>
+    <a href="{% url 'aboutus:aboutus' %}">Про нас</a>
+    <a href="{% url 'gallery:gallery_views' %}">Фотогалерея</a>
+    <a href="{% url 'reviews:reviews' %}" >Відгуки</a>
+    <a href="{% url 'order:send_order' %}">Замовити</a>
+    </div>
+    
+<div class="content">
+    <center>
+    <div class="content-center">
+    <div class="c-block">{{general_information}}</div>
+    <div class="c-block"><i class="fa fa-map-marker" aria-hidden="true"> 1-а адреса:</i>{{first_location}}</div>
+    <div class="c-block"><i class="fa fa-map-marker" aria-hidden="true"> 2-а адреса:</i>{{second_location}}</div>
+    <div class="c-block"><i class="fa fa-phone" aria-hidden="true"> 1-й телефон:</i>{{first_phone}}</div>
+    <div class="c-block"><i class="fa fa-phone" aria-hidden="true"> 2-й телефон:</i>{{second_phone}}</div>
+    <div class="c-block" >Графік 1:{{schedule_first}}</div>
+	<div class="c-block" >Графік 2:{{schedule_second}}</div>	
+    <div class="c-block">Переваги:{{advantages}}</div>
+        </div></center>
+</div>
+    
+<div class="question-button">
+    У Вас є питання?
+    </div>
+<div class="popup">
+    <i class="fa fa-times" aria-hidden="true"></i>
+    <div class="popup_block">
+        <form action="/thanks/question/" method="post">
+			{% csrf_token %}
+        <div class="field">
+  <label>Тема:</label> {{ question_form.title }}
+        </div>
+    <br>
+        <div class="field">
+    <label>Запитання:</label> {{ question_form.body }}
+        </div>
+    <br>
+        <div class="field">
+    <label>Відправник:</label> {{ question_form.sender }}
+        </div>
+    <br>
+    <input type="submit" value="Надіслати">
+        </form>
+    </div>
+        
+    </div>
+<div class="wrapper">
+    </div>
+</body>
+    
+</html>
